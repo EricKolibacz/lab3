@@ -54,10 +54,10 @@ else
     Sw = 1/50*Sw_spatial;
     H = abs(((2*zeta*omega_n*1i.*omega+omega_n^2)./(1i.*omega.*1i.*omega + 2*zeta*omega_n*1i.*omega+omega_n^2)));
     Sp = H.^2.*Sw;
-    loglog(omega,Sp,'DisplayName','S_p');
+    loglog(omega,Sp);
     xlim([omega(1) omega(n)])
     grid on;
     legend('show','Location','NorthEast');
-    xlabel('Frequency [rad/s]');
-    ylabel('Energy ');
+    xlabel('Time [sec]');
+    ylabel('Displacement [m]');
 end
