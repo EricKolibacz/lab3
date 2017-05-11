@@ -15,13 +15,13 @@ L1 = L;
 L2 = L;
 
 exictation = 0;
-f = 1.1792;
+f = 8;
 run_time = 20;
 A = [0 1 0 0;
     -2*k/m -2*c/m 0 0;
     0 0 0 1;
     %0 0 -2*L/J -2*L/J];
-    0 0 ];
+    0 0 -2*k*L^2/J -2*c*L^2/J];
 B = [0 0 0 0;
     k/m c/m k/m c/m;
     0 0 0 0;
@@ -37,13 +37,13 @@ D = [0 0 0 0
 G_ss = ss(A,B,C,D);
 
 sim chassis_passive_sim
-plot(z_SH.Time,z_SH.Data,'Color','r','LineWidth',1.5,'DisplayName','Y1 for passive');
+plot(z_pas.Time,z_pas.Data,'Color','r','LineWidth',1.5,'DisplayName','Y1 for passive');
 legend('show','Location','NorthEast');
 xlabel('Time [sec]');
 ylabel('Displacement [m]');
 grid on;
 figure;
-plot(X_SH.Time,X_SH.Data,'Color','b','LineWidth',1.5,'DisplayName','Y2 for passive');
+plot(X_pas.Time,X_pas.Data,'Color','b','LineWidth',1.5,'DisplayName','Y2 for passive');
 legend('show','Location','NorthEast');
 xlabel('Time [sec]');
 ylabel('Angle [rad]');
