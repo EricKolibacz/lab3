@@ -15,8 +15,8 @@ L1 = L;
 L2 = L;
 c_z = 66666;
 c_X = 66666*35;
-exictation = 1;
-f = 1.1792;
+exictation = 0;
+f = 7.39/(2*pi);
 run_time = 6;
 
 
