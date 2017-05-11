@@ -37,7 +37,7 @@ G = ss(Ask,Bsk,Csk,Dsk);
 
       
 %Weighting functions
-
+close all
 %For penalizing actuator force
 Wa1=(0.00175*s+1)/(0.00025*s+1);
 Wa2=Wa1;
@@ -50,8 +50,8 @@ s1b=-eps+1i*sqrt(wnb^2-eps^2);
 s2b=-eps-1i*sqrt(wnb^2-eps^2);
 s1chi=-eps+1i*sqrt(wnchi^2-eps^2);
 s2chi=-eps-1i*sqrt(wnchi^2-eps^2);
-kb=1*10^3%input('Enter the gain for Wb = '); % around 10^-3
-kchi=2*10^4%input('Enter the gain for Wchi = '); % around 10^4
+kb=6.66*10^3%input('Enter the gain for Wb = '); % around 10^-3
+kchi=4.66*10^4%input('Enter the gain for Wchi = '); % around 10^4
 Wb=(kb*s1b*s2b)/((s-s1b)*(s-s2b));
 Wchi=(kchi*s1chi*s2chi)/((s-s1chi)*(s-s2chi));
 
@@ -71,7 +71,7 @@ Pe=minreal(Pe);%This syntax cancels pole-zero pairs in transfer
 
 %Now use the controller K in your simulation
 
-exictation = 1;
+exictation = 0;
 f = 1;
 run_time = 6;
 sim('Hinf_sim')
@@ -118,4 +118,24 @@ xlabel('Time [sec]');
 ylabel('Angle [rad]');
 grid on;
 
+figure(3)
+bode(Wa1)
+title('bode of Wa1, Wa2')
 
+figure(4)
+bode(Wb)
+title('bode of Wb')
+
+figure(5)
+bode(Wchi)
+title('bode of Wchi')
+
+%Fa1 Fa2
+figure(6);
+plot(Fa1.Time,Fa1.Data,'Color','r','LineWidth',1.5,'DisplayName','Fa1');
+hold on;
+plot(Fa2.Time,Fa2.Data,'Color','b','LineWidth',1.5,'DisplayName','Fa2');
+legend('show','Location','NorthEast');
+xlabel('Time [sec]');
+ylabel('Force [N]');
+grid on;
