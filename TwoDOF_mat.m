@@ -43,6 +43,7 @@ D = [0 0 0];
 G_ss = ss(A,B,C,D);
 figure(1)
 T = 0.08;
+%Task 6.4
 sim TwoDOF
 plot(ref.Time,ref.Data,'Color','k','LineWidth',1.1,'DisplayName','Input');
 hold on

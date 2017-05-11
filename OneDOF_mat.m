@@ -83,8 +83,11 @@ if excitation_opt < 3
     plot(z_p.Time,z_p.Data,'Color','r','LineWidth',1.5,'DisplayName','Output for passive');
     hold on
     plot(ref.Time,ref.Data,'Color','k','LineWidth',1.1,'DisplayName','Input');
-    if task == 2 || task == 4
+    if task == 2
        plot(z_p_PD.Time,z_p_PD.Data,'Color','b','LineWidth',1.1,'DisplayName','Output for PD');
+    end 
+    if task == 4
+       plot(z_p_PD.Time,z_p_PD.Data,'Color','b','LineWidth',1.1,'DisplayName','Output for Skyhook');
     end 
     if task == 3
        plot(z_p_PID.Time,z_p_PID.Data,'Color','b','LineWidth',1.1,'DisplayName','Output for PID');
