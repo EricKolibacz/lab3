@@ -18,15 +18,15 @@ exictation = 0;
 f = 1.1792;
 run_time = 20;
 A = [0 1 0 0;
-    -(k1+k2)/m -(c1+c2)/m 0 0;
+    -2*k/m -2*c/m 0 0;
     0 0 0 1;
     %0 0 -2*L/J -2*L/J];
-(L1*k1+L2*k2)/J (L1*c1+L2*c2)/J 0 0];
+    0 0 ];
 B = [0 0 0 0;
-    k1/m c1/m k2/m c2/m;
+    k/m c/m k/m c/m;
     0 0 0 0;
     %-L1*k1/J -L1*c1/J +L2*k2/J +L2*c2/J];
-    -L1*k1/J -L1*c1/J -L2*k2/J -L2*c2/J];
+    -L*k/J -L*c/J L*k/J L*c/J];
 C = [1 0 0 0;
     0 0 1 0];
 D = [0 0 0 0
@@ -36,7 +36,7 @@ D = [0 0 0 0
 
 G_ss = ss(A,B,C,D);
 
-sim Hinf_sim
+sim chassis_passive_sim
 plot(z_SH.Time,z_SH.Data,'Color','r','LineWidth',1.5,'DisplayName','Y1 for passive');
 legend('show','Location','NorthEast');
 xlabel('Time [sec]');
