@@ -23,6 +23,12 @@ Csk=[0 1 0 0
     0 0 0 1];
 Dsk=zeros(2,4);
 
+G = ss(Ask,Bsk,Csk,Dsk);
+
+bode(G)
+
+
+
 %% H_inf using linmod syntax
 
 %state space: The same as skyhook
@@ -36,14 +42,14 @@ Wa2=Wa1;
 
 %For penalizing bounce and pitch motions
 eps=1;
-wnb=???;            %Find the right equation or value for wnb
-wnchi=???;          %Find the right equation or value for wnchi
+wnb=7.39;            %Find the right equation or value for wnb
+wnchi=7.39;          %Find the right equation or value for wnchi
 s1b=-eps+1i*sqrt(wnb^2-eps^2);
 s2b=-eps-1i*sqrt(wnb^2-eps^2);
 s1chi=-eps+1i*sqrt(wnchi^2-eps^2);
 s2chi=-eps-1i*sqrt(wnchi^2-eps^2);
-kb=input('Enter the gain for Wb = '); 
-kchi=input('Enter the gain for Wchi = ');
+kb=1*10^3%input('Enter the gain for Wb = '); % around 10^-3
+kchi=2*10^4%input('Enter the gain for Wchi = '); % around 10^4
 Wb=(kb*s1b*s2b)/((s-s1b)*(s-s2b));
 Wchi=(kchi*s1chi*s2chi)/((s-s1chi)*(s-s2chi));
 
@@ -58,6 +64,39 @@ Pe=minreal(Pe);%This syntax cancels pole-zero pairs in transfer
 %functions. The output system has minimal order and the same response
 %characteristics as the original model.
 [K,Pec,gamma,info]=hinfsyn(Pe,nmeas,ncont,'method','lmi'); % for working with the error
+
 [Ainf, Binf, Cinf, Dinf]=ssdata(K);
 
 %Now use the controller K in your simulation
+
+exictation = 1;
+f = 1;
+run_time = 15;
+sim('Hinf_sim')
+
+figure(1)
+plot(z_SH.Time,z_SH.Data,'Color','r','LineWidth',1.5,'DisplayName','Y1 for Hinf');
+%hold on;
+%plot(z_pas.Time,z_pas.Data,'Color','b','LineWidth',1.5,'DisplayName','Y1 for passive');
+legend('show','Location','NorthEast');
+xlabel('Time [sec]');
+ylabel('Displacement [m]');
+grid on;
+figure(2);
+plot(X_SH.Time,X_SH.Data,'Color','r','LineWidth',1.5,'DisplayName','Y2 for Hinf');
+%hold on;
+%plot(X_pas.Time,X_pas.Data,'Color','b','LineWidth',1.5,'DisplayName','Y2 for passive');
+legend('show','Location','NorthEast');
+xlabel('Time [sec]');
+ylabel('Angle [rad]');
+grid on;
+%figure;
+%bode(G_ss(1,1))
+grid on;
+
+
+
+
+
+
+
