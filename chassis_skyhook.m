@@ -1,7 +1,12 @@
-%% Task 1.1
+%% Simple Vehicle model
+% Comparison Skyhook and passive control
+
 clear all;
-s = tf('s');
 close all;
+
+
+%% paramters
+s = tf('s');
 m = 22000;
 J = 700000;
 c = 40000;
@@ -13,13 +18,23 @@ k2 = k;
 L = 6;
 L1 = L;
 L2 = L;
+
+%Tuned parameter for the actuators
 c_z = 66666;
 c_X = 66666*35;
+
+
+%% Tunable parameters
+%Excitation 0=sinusiodal, 1 = step
 exictation = 0;
-f = 7.39/(2*pi);
-run_time = 6;
+%Frequency in Hz
+f = 8;
+
+run_time = 20;
 
 
+
+%% Passive system
 A = [0 1 0 0;
     -2*k/m -2*c/m 0 0;
     0 0 0 1;
@@ -37,20 +52,10 @@ D = [0 0 0 0
 
 
 sim chassis_passive_sim
+%At this point z_pas and X_pas are defined
 
-% 
-% A = [0 1 0 0;
-%     -(k1+k2)/m 0 0 0;
-%     0 0 0 1;
-% (L1*k1+L2*k2)/J 0 0 0];
-% B = [0 0 0 0;
-%     k1/m k2/m 1/m 1/m;
-%     0 0 0 0;
-%     -L1*k1/J -L2*k2/J -L1/J -L2/J];
-% C = [0 1 0 0;
-%     0 0 0 1];
-% D = [0 0 0 0
-%     0 0 0 0];
+
+%% Skyhook system
 A = [0 1 0 0;
     -2*k/m 0 0 0;
     0 0 0 1;
@@ -70,10 +75,13 @@ G_ss = ss(A,B,C,D);
 
 
 sim chassis_skyhook_sim
+%At this point z_SH and X_SH should be defined
+%as well as the two forces Fa1 and Fa2
 
+%% Plots
 
-
-
+%two figures of the output variables as comparison between passive and
+%Skyhook
 plot(z_SH.Time,z_SH.Data,'Color','r','LineWidth',1.5,'DisplayName','Y1 for Skyhook');
 hold on;
 plot(z_pas.Time,z_pas.Data,'Color','b','LineWidth',1.5,'DisplayName','Y1 for passive');
@@ -89,12 +97,9 @@ legend('show','Location','NorthEast');
 xlabel('Time [sec]');
 ylabel('Angle [rad]');
 grid on;
-%figure;
-%bode(G_ss(1,1))
-grid on;
 
 
-%Fa1 Fa2
+%Fa1 Fa2 - forces of the actuators
 figure;
 plot(Fa1.Time,Fa1.Data,'Color','r','LineWidth',1.5,'DisplayName','Fa1');
 hold on;
@@ -102,7 +107,4 @@ plot(Fa2.Time,Fa2.Data,'Color','b','LineWidth',1.5,'DisplayName','Fa2');
 legend('show','Location','NorthEast');
 xlabel('Time [sec]');
 ylabel('Force [N]');
-grid on;
-%figure;
-%bode(G_ss(1,1))
 grid on;
